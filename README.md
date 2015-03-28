@@ -1,0 +1,1 @@
+A small challenge at a time to exercise logic
