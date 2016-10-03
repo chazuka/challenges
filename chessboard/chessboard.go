@@ -11,35 +11,36 @@ const (
 	SPawn   = "[.]"
 	SEven   = "[o]"
 	SOdd    = "[x]"
-	SLine   = "\n"
 )
 
 func Chessboard() string {
+	num := 8
 	swap := func(c string) string {
 		if c == SEven {
 			return SOdd
 		}
 		return SEven
 	}
-	board := make([]string, 81, 81)
-	for i := 0; i < 8; i++ { // rows
-		for j := 0; j < 8; j++ { // columns
+	board := make([]string, num, num)
+	for i := 0; i < num; i++ {
+		row := ""
+		for j := 0; j < num; j++ {
 			switch i {
 			case 0, 7:
 				switch j {
 				case 0, 7:
-					board = append(board, SRook)
+					row += SRook
 				case 1, 6:
-					board = append(board, SBishop)
+					row += SBishop
 				case 2, 5:
-					board = append(board, SKnight)
+					row += SKnight
 				case 3:
-					board = append(board, SQueen)
+					row += SQueen
 				case 4:
-					board = append(board, SKing)
+					row += SKing
 				}
 			case 1, 6:
-				board = append(board, SPawn)
+				row += SPawn
 			default:
 				var s string
 				if i%2 == 0 {
@@ -50,10 +51,10 @@ func Chessboard() string {
 				if j%2 == 1 {
 					s = swap(s)
 				}
-				board = append(board, s)
+				row += s
 			}
 		}
-		board = append(board, SLine)
+		board[i] = row
 	}
-	return strings.Join(board, "")
+	return strings.Join(board, "\n")
 }

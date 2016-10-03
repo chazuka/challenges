@@ -1,4 +1,3 @@
-var Prime = function() {
     'use strict';
     var min = 2;
     var reason = (function() {
@@ -16,7 +15,7 @@ var Prime = function() {
         };
     })();
 
-    function isPrime(n) {
+    var is = function(n) {
         if (n < min) {
             reason.set('prime must be integer greater than 2');
             return false;
@@ -34,12 +33,12 @@ var Prime = function() {
         return true;
     }
 
-    function firstPrimes(n) {
+    var first = function(n) {
         var x = min,
             y = 0,
             r = [];
         while (y < n) {
-            if (isPrime(x)) {
+            if (is(x)) {
                 r.push(x);
                 y++;
             }
@@ -48,62 +47,20 @@ var Prime = function() {
         return r;
     }
 
-    function primesBetween(x, y) {
+    var between = function(x, y) {
         var r = [];
         for (var i = x; i <= y; i++) {
-            if (isPrime(i)) r.push(i);
+            if (is(i)) r.push(i);
         }
         return r;
     }
 
-    return {
-        is: isPrime,
-        first: firstPrimes,
-        between: primesBetween,
-        why: function() {
-            return reason.get();
-        }
-    };
+    var why = function() {
+        return reason.get();
+    }
 
-};
 
-// Test helpers
-function run(f) {
-    'use strict';
-    var start = new Date().getTime();
-    var r = f();
-    var end = new Date().getTime();
-    console.log('|---', (end - start), 'ms');
-    return r;
-}
-
-// Test
-var p = new Prime();
-var primes;
-
-//* is prime?
-for (var i = 0; i < 100; i++) {
-    var r = Math.floor(Math.random() * 1000000);
-    var m = r + (p.is(r) ? ' is a prime' : ' is not a prime! because ' + p.why());
-    console.log('|---', m);
-}
-//*/
-
-//* first n primes
-var num = 50000;
-primes = run(function() {
-    return p.first(num);
-});
-console.log('the first', num, 'primes are');
-console.log(primes.join(', '));
-//*/
-
-//* primes between number
-var from = 1,
-    to = 1000000;
-primes = run(function() {
-    return p.between(from, to);
-});
-console.log('there are', primes.length, 'primes between', from, 'to', to);
-console.log(primes.join(', '));
-//*/
+    exports.is = is;
+    exports.first = first;
+    exports.between = between;
+    exports.why = why;
